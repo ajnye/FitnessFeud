@@ -12,4 +12,9 @@ urlpatterns = [
     path('<int:question_id>/results/', views.results, name='results'),
     # ex: /polls/5/vote/
     path('<int:question_id>/vote/', views.vote, name='vote'),
+
+    path('<int:question_id>/submit/', views.submit, name="submit"),
+
+    # path(r'^submit/$', views.submit),
+
 ]
