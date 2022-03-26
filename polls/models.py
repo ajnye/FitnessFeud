@@ -3,7 +3,6 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
-
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
@@ -19,3 +18,24 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
     def __str__(self):
         return self.choice_text
+
+class Group(models.Model):
+    group_name = models.CharField(max_length=150)
+    days_left = models.IntegerField(default=0)
+    def size(self) :
+        return self.person_set.count()
+    def __str__ (self):
+        return self.group_name
+
+class Person(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    def __str__ (self):
+        return self.name
+        
+class Exercise(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    type = models.CharField(max_length=50)
+    duration = models.IntegerField()
+    def __str__ (self):
+        return self.duration
