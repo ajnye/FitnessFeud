@@ -17,4 +17,6 @@ urlpatterns = [
 
     # path(r'^submit/$', views.submit),
 
+    # Dylan
+    path('home', views.groups, name='home'),
 ]

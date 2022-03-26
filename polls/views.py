@@ -1,11 +1,19 @@
 from django.shortcuts import render, get_object_or_404
 
 from .models import Question
+from .models import Group
 
 # Create your views here.
 from django.http import HttpResponse, Http404
 from django.template import loader
 
+#Dylan
+def groups(request):
+    group_list = Group.objects.order_by('-group_name')
+    context = {
+        'group_list': group_list
+    }
+    return render(request, 'polls/homepage.html', context)
 
 def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
