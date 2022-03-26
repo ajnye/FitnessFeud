@@ -8,7 +8,7 @@ from django.http import HttpResponse, Http404
 from django.template import loader
 
 #Dylan
-def groups(request, ):
+def groups(request, question_id):
     if request.method == 'POST':
         name_input = request.POST.get('fname')
         #create group in SQL
@@ -30,14 +30,23 @@ def groups(request, ):
 
 def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    latest_group_list = Group.objects.order_by('?')
     context = {
-        'latest_question_list': latest_question_list,
+        'latest_question_list': latest_question_list, 'latest_group_list' : latest_group_list
     }
     return render(request, 'polls/index.html', context)
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/detail.html', {'question': question})
+    # peoples = get_object_or_404(Group, pk=group_id).person_set.all().order_by('name')[:3]
+    return render(request, 'polls/detail.html', {"question" : question})
+
+def group_detail(request, group_id):
+    # question = get_object_or_404(Question, pk=question_id)
+    # peoples = get_object_or_404(Group, pk=group_id).person_set.order_by('name')[:3]
+    peoples = get_object_or_404(Group, pk=group_id)
+    print(peoples)
+    return render(request, 'polls/detail.html', {"peoples" : peoples})
 
 def results(request, question_id):
     response = "You're looking at the results of question %s."

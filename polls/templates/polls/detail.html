@@ -1,6 +1,10 @@
-<h1>{{ question.question_text }}</h1>
+<h1>{{ groups.name }}</h1>
+<h2></h2>
 <ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }}</li>
+{{ peoples.group_name }}
+Current Rankings:
+{% for person in peoples.person_set.all %}
+    <li>{{ loop.index }}. {{ person }}</li>
 {% endfor %}
+
 </ul>

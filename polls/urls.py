@@ -19,4 +19,5 @@ urlpatterns = [
 
     # Dylan
     path('home', views.groups, name='home'),
+    path('group/<int:group_id>/', views.group_detail, name='group_detail'),
 ]
