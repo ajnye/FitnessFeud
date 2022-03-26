@@ -3,6 +3,13 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
+#Dylan
+class Group(models.Model):
+    group_name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.group_name
+
+
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
