@@ -8,7 +8,20 @@ from django.http import HttpResponse, Http404
 from django.template import loader
 
 #Dylan
-def groups(request):
+def groups(request, ):
+    if request.method == 'POST':
+        name_input = request.POST.get('fname')
+        #create group in SQL
+        group = Group(group_name = name_input)
+        group.save()
+
+        search_results = name_input
+        question = get_object_or_404(Question, pk=question_id)
+        context = { 'search_results': search_results, 'question' : question, 'question_id' : question_id }
+
+        return render(request, 'polls/submit.html', context)
+        
+
     group_list = Group.objects.order_by('-group_name')
     context = {
         'group_list': group_list
