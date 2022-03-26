@@ -2,7 +2,6 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
-from django.contrib.postgres.fields import ArrayField
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -23,8 +22,8 @@ class Choice(models.Model):
 class Group(models.Model):
     group_name = models.CharField(max_length=150)
     days_left = models.IntegerField(default=0)
-    size = Person_set.count()
-    rank = ArrayField(models.IntegerField())
+    def size(self) :
+        return self.person_set.count()
     def __str__ (self):
         return self.group_name
 
