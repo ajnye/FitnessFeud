@@ -38,4 +38,4 @@ class Exercise(models.Model):
     type = models.CharField(max_length=50)
     duration = models.IntegerField()
     def __str__ (self):
-        return self.duration
+        return self.type

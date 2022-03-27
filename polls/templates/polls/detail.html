@@ -1,10 +1,12 @@
 <h1>{{ groups.name }}</h1>
 <h2></h2>
-<ul>
+<ol>
 {{ peoples.group_name }}
 Current Rankings:
 {% for person in peoples.person_set.all %}
-    <li>{{ loop.index }}. {{ person }}</li>
+    {% for exercise in person.exercise_set.all %}
+        <li>{{ forloop.counter }}. {{ exercise_type }}</li>
+    {% endfor %}
 {% endfor %}
 
-</ul>
+</ol>
