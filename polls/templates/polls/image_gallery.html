@@ -1,11 +1,19 @@
 {%load static%}
 <html>
-    <nav>
+    <style>
+        div.flex-container {
+            display: flex;
+            justify-content: space-evenly;
+            background-color: rgba(109, 109, 238, 0.973);
+            padding: 10px 60px;
+        }
+    </style>
+    <div class = "flex-container">
         <a href="/polls/home">Home</a>
         <a href="/polls/group/{{group_id}}">Rankings</a>
         <a href="/polls/group/image_gallery/{{ group_id }}">Photo Gallery</a>  
         <a href="/polls/group/submission">Submission</a>
-    </nav>
+    </div>
     <head>
         <link href='{% static "polls\soft-design-system.min.css" %}' rel="stylesheet">
     </head>

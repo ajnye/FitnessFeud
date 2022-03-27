@@ -5,9 +5,17 @@
 <!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
 {%load static%}
 <html>
-    <nav>
+    <style>
+        div.flex-box {
+            display: flex;
+            justify-content: space-evenly;
+            background-color: rgba(109, 109, 238, 0.973);
+            padding: 10px 60px;
+        }
+    </style>
+    <div class="flex-box">
         <a href="/polls/home">Home</a>
-    </nav>
+    </div>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,40 +25,54 @@
         <link href='{% static "polls\soft-design-system.min.css" %}' rel="stylesheet">
     </head>
     <body>
-        <h style = "font-size: xx-large">Fitness Feud</h>
-        <ul>
-        {% for group in group_list %}
-        <li>{{ group.group_name }}</li>
-        {% endfor %}
-        </ul>
-        <form action="", method="post">
-            {% csrf_token %}
-            <label for="fname">Create Group:</label><br>
-            <input type="text" id="fname" name="fname" value=""><br>
-            <input type="submit" value="Submit">
-            {% if error == 1 %}
-                <p>{{ error_msg }}</p>
-            {% else %}
-                <p> </p>
-            {% endif%}
+        <style>
+        div.flex-container {
+            display: flex;
+            justify-content: flex-start;
+            
+        }
+        </style>
+        <div class="flex-container">
+            <div>
+                <h style = "font-size: xx-large">Fitness Feud</h>
+                <!-- <ul>
+                {% for group in group_list %}
+                <li>{{ group.group_name }}</li>
+                {% endfor %}
+                </ul> -->
+                <form action="", method="post">
+                    {% csrf_token %}
+                    <label for="fname">Create Group:</label><br>
+                    <input type="text" id="fname" name="fname" value=""><br>
+                    <input type="submit" value="Submit">
+                    {% if error == 1 %}
+                        <p>{{ error_msg }}</p>
+                    {% else %}
+                        <p> </p>
+                    {% endif%}
 
-            {% if fname in group_list %}
-                Display search results here. {{search_results}}
-            {% endif %}
-        </form> 
-        
-        <form action="", method="post">
-            {% csrf_token %}
-            <label for="gname">Find Group:</label><br>
-            <input type="text" id="gname" name="gname" value=""><br>
-            <input type="submit" value="Submit">
+                    {% if fname in group_list %}
+                        Display search results here. {{search_results}}
+                    {% endif %}
+                </form> 
+                
+                <form action="", method="post">
+                    {% csrf_token %}
+                    <label for="gname">Find Group:</label><br>
+                    <input type="text" id="gname" name="gname" value=""><br>
+                    <input type="submit" value="Submit">
 
-            {% if error == 2 %}
-                <p>{{ error_msg }}</p>
-            {% else %}
-                <p> </p>
-            {% endif%}
-        </form>
-        <script src="" async defer></script>
+                    {% if error == 2 %}
+                        <p>{{ error_msg }}</p>
+                    {% else %}
+                        <p> </p>
+                    {% endif%}
+                </form>
+                <script src="" async defer></script>
+            </div>
+            <div>
+                <img src = "https://cdn.pixabay.com/photo/2013/07/13/12/07/jogger-159234_1280.png" width = "200px" height="400px"> 
+            </div>
+        </div>
     </body>
 </html>

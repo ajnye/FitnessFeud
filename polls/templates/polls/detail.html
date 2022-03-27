@@ -25,21 +25,25 @@
             padding: 40px;
             text-align: center;
         }
-        div.flex-container {
-            display: flex;
-            justify-content: center;
-            align-content: space-evenly;
-        }
+        
         </style>
         <link href='{% static "polls\soft-design-system.min.css" %}' rel="stylesheet">
     </head>
 <body>
-    <nav>
+    <style>
+        div.flex-container {
+            display: flex;
+            justify-content: space-evenly;
+            background-color: rgba(109, 109, 238, 0.973);
+            padding: 10px 60px;
+        }
+    </style>
+    <div class = "flex-container">
         <a href="/polls/home">Home</a>
         <a href="/polls/group/{{group_id}}">Rankings</a>
         <a href="/polls/group/image_gallery/{{ group_id }}">Photo Gallery</a>  
         <a href="/polls/group/submission">Submission</a>
-    </nav>
+    </div>
     <h1>{{ groups.name }}</h1>
     <h2></h2>
     <ul>
