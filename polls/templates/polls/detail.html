@@ -29,13 +29,16 @@
         </style>
         <link href='{% static "polls\soft-design-system.min.css" %}' rel="stylesheet">
     </head>
-<body>
+<body class="body">
     <style>
         div.flex-container {
             display: flex;
             justify-content: space-evenly;
             background-color: rgba(109, 109, 238, 0.973);
             padding: 10px 60px;
+        }
+        body {
+            background-color: rgb(248, 255, 255);
         }
     </style>
     <div class = "flex-container">
@@ -59,7 +62,7 @@
     {% endif %}
 
 
-    Current Rankings Overall:
+    <b>Current Rankings Overall:</b>
     {% for person in peoples_ranking %}
         <li>{{ forloop.counter }}. {{ person.0 }} </li>
     {% endfor %}
@@ -67,7 +70,7 @@
     <br>
     <br>
 
-    Current Rankings in Exercise Duration (in minutes):
+    <b>Current Rankings in Exercise Duration (in minutes):</b>
     {% for person in peoples_duration %}
         <li>{{ forloop.counter }}. {{ person.0 }}, {{ person.1 }} minutes</li>
     {% endfor %}
@@ -75,7 +78,7 @@
     <br>
     <br>
 
-    Current Rankings in Exercise Distance (in miles):
+    <b>Current Rankings in Exercise Distance (in miles):</b>
     {% for person in peoples_distance %}
         <li>{{ forloop.counter }}. {{ person.0 }}, {{ person.1 }} miles</li>
     {% endfor %}
@@ -83,7 +86,7 @@
     <br>
     <br>
 
-    Current Rankings in Water Drunk (in cups):
+    <b>Current Rankings in Water Drunk (in cups):</b>
     {% for person in peoples_cups %}
         <li>{{ forloop.counter }}. {{ person.0 }}, {{ person.1 }} cups</li>
     {% endfor %}

@@ -19,7 +19,12 @@
 </head>
 <h1 style="text-align: center">Data Submission</h1>
 
-<body>
+<body class = "body">
+    <style>
+        body {
+            background-color: rgb(248, 255, 255);
+        }
+    </style>
     <form method = "post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
