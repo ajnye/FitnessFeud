@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from . import views
 
@@ -15,9 +17,14 @@ urlpatterns = [
 
     path('<int:question_id>/submit/', views.submit, name="submit"),
 
-    # path(r'^submit/$', views.submit),
-
     # Dylan
     path('home', views.groups, name='home'),
     path('group/<int:group_id>/', views.group_detail, name='group_detail'),
+
+    #Cheryl
+    path('image_upload', views.image_view, name='image_upload'),
 ]
+
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL,
+                              document_root=settings.MEDIA_ROOT)
