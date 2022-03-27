@@ -8,7 +8,7 @@ app_name = 'polls'
 urlpatterns = [
     # ex: /polls/
     path('', views.index, name='index'),
-    path('<int:group_id>', views.group_detail, name='group_detail'),
+    path('group/<int:group_id>', views.group_detail, name='group_detail'),
     # ex: /polls/5/
     # path('<int:question_id>/', views.detail, name='detail'),
     # ex: /polls/5/results/
@@ -21,13 +21,13 @@ urlpatterns = [
     # Dylan
     path('home', views.groups, name='home'),
     #Cheryl
-    path('image_upload', views.image_view, name='image_upload'),
+    # path('image_upload', views.image_view, name='image_upload'),
 
     # home
     path('home', views.groups, name='home'),
     # group details
-    path('group/<int:group_id>/', views.group_detail, name='group_detail'),
-    path('submission', views.image_view, name='image_upload'),
+    # path('group/<int:group_id>/', views.group_detail, name='group_detail'),
+    path('group/submission', views.image_view, name='image_upload'),
 ]
 
 if settings.DEBUG:

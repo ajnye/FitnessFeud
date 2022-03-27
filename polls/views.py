@@ -16,16 +16,15 @@ def image_view(request):
 
         if form.is_valid():
             form.save()
-            return render(request, 'polls/detail.html')
+            return redirect(form.fields['group'].group_id)
     else:
         form = PersonForm()
         
-    return render(request, 'images.html', {'form': form})
+    return render(request, 'polls/images.html', {'form': form})
 
 #Dylan
 import sqlite3
 def groups(request):
-    print(request.method)
     if request.method == 'POST':
         if request.POST.get('fname') != None:
             name_input = request.POST.get('fname')
@@ -44,11 +43,9 @@ def groups(request):
             conn = sqlite3.connect('db.sqlite3')
             cursor = conn.cursor()
             sqlcommand = 'SELECT id FROM polls_group WHERE group_name = \'' + str(group_id) + '\'' 
-            print(sqlcommand)
             cursor.execute(sqlcommand)
             reslist = cursor.fetchall()
             result = str(reslist[0])
-            print(result)
         return redirect('group/' + result[1:len(result)-2])
 
     group_list = Group.objects.order_by('-group_name')
@@ -74,7 +71,6 @@ def group_detail(request, group_id):
     # question = get_object_or_404(Question, pk=question_id)
     # peoples = get_object_or_404(Group, pk=group_id).person_set.order_by('name')[:3]
     group = get_object_or_404(Group, pk=group_id)
-    print(group.update_days_left())
     peoples_duration = group.person_set.order_by('-duration')[:3]
     peoples_distance = group.person_set.order_by('-distance')[:3]
     peoples_cups = group.person_set.order_by('-cups')[:3]
