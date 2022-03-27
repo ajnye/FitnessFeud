@@ -3,6 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+{%load static%}
 <html>
     <nav>
         <a href="/polls/home">Home</a>
@@ -13,10 +14,10 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link href='{% static "polls\soft-design-system.min.css" %}' rel="stylesheet">
     </head>
     <body>
-        <h>Fitness Feud</h>
+        <h style = "font-size: xx-large">Fitness Feud</h>
         <ul>
         {% for group in group_list %}
         <li>{{ group.group_name }}</li>
