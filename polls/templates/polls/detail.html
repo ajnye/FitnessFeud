@@ -30,7 +30,7 @@ Current Rankings in Water Drunk (in cups):
 {% endfor %}
 
 {% if group.is_ongoing %}
-    <form action="", method="post">
+    <form action="{% url 'polls:submit' group.id %}", method="post">
         {% csrf_token %}
         <input type="submit" value="Submit A New Entry">
     </form> 

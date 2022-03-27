@@ -73,14 +73,14 @@ def results(request, question_id):
 def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 
-def submit(request, question_id):
+def submit(request, group_id):
     if request.method == 'POST':
         fname = request.POST.get('fname')
         lname = request.POST.get('lname')
 
         search_results = fname + " " + lname
-        question = get_object_or_404(Question, pk=question_id)
-        context = { 'search_results': search_results, 'question' : question, 'question_id' : question_id }
+        group = get_object_or_404(Group, pk=group_id)
+        context = { 'search_results': search_results, 'group' : group, 'group_id' : group_id }
 
         return render(request, 'polls/submit.html', context)
         # # Create a form instance and populate it with data from the request (binding):
@@ -94,5 +94,5 @@ def submit(request, question_id):
 
         #     return render(request, 'polls/submit.html', context)
 
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/submit.html', {'question': question})
+    group = get_object_or_404(Group, pk=group_id)
+    return render(request, 'polls/submit.html', {'group': group})
