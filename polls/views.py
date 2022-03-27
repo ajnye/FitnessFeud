@@ -82,7 +82,20 @@ def groups(request):
 def group_detail(request, group_id):
 
     group = get_object_or_404(Group, pk=group_id)
+    group.update_days_left()
 
+    conn = sqlite3.connect('db.sqlite3')
+    cursor = conn.cursor()
+    sqlcommand1 = 'SELECT * FROM polls_person WHERE group_id = ' + str(group_id) + ' ORDER BY date_recorded DESC LIMIT 5'
+    cursor.execute(sqlcommand1)
+
+    fields = [field_name[0] for field_name in cursor.description]
+    select = [dict(zip(fields,row)) for row in cursor.fetchall()]
+
+    history = Person.objects.all()
+    # get specific field
+    # nome = (row['A1_NOME'] for row in select)
+    
     conn = sqlite3.connect('db.sqlite3')
     cursor = conn.cursor()
     sqlcommand = 'SELECT * FROM polls_person WHERE group_id = ' + str(group_id)
@@ -106,7 +119,7 @@ def group_detail(request, group_id):
     peoples_distance = sorted(peoples_distance.items(), key=lambda x: x[1], reverse=True)
     peoples_cups = sorted(peoples_cups.items(), key=lambda x: x[1], reverse=True)
     print(peoples_cups)
-    return render(request, 'polls/detail.html', {"peoples_duration" : peoples_duration, "peoples_distance" : peoples_distance, "peoples_cups" : peoples_cups, "group" : group, "group_id": group_id})
+    return render(request, 'polls/detail.html', {"peoples_duration" : peoples_duration, "peoples_distance" : peoples_distance, "peoples_cups" : peoples_cups, "group" : group, "group_id": group_id, "select" : select, "history" : history})
 
 
 def submit(request, group_id):
