@@ -32,9 +32,10 @@ class Person(models.Model):
     name = models.CharField(max_length=50)
     duration = models.IntegerField(default=0)
     distance = models.DecimalField(decimal_places=2, max_digits=50, default=0)
+    image = models.ImageField(upload_to='images/')
     def __str__ (self):
         return self.name
-        
+       
 class Exercise(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     type = models.CharField(max_length=50)

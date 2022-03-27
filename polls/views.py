@@ -1,11 +1,26 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Question
 from .models import Group
 
+from .forms import *
+
 # Create your views here.
 from django.http import HttpResponse, Http404
 from django.template import loader
+
+# Cheryl
+def image_view(request):
+    if request.method == 'POST':
+        form = PersonForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return render(request, 'polls/detail.html')
+    else:
+        form = PersonForm()
+        
+    return render(request, 'images.html', {'form': form})
 
 #Dylan
 def groups(request, question_id):
