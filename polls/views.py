@@ -118,8 +118,17 @@ def group_detail(request, group_id):
     peoples_duration = sorted(peoples_duration.items(), key=lambda x: x[1], reverse=True)
     peoples_distance = sorted(peoples_distance.items(), key=lambda x: x[1], reverse=True)
     peoples_cups = sorted(peoples_cups.items(), key=lambda x: x[1], reverse=True)
-    print(peoples_cups)
-    return render(request, 'polls/detail.html', {"peoples_duration" : peoples_duration, "peoples_distance" : peoples_distance, "peoples_cups" : peoples_cups, "group" : group, "group_id": group_id, "select" : select, "history" : history})
+
+    peoples_ranking = { }
+    for data in peoples_cups:
+        peoples_ranking[data[0]] = peoples_cups.index(data)
+    for data in peoples_distance:
+        peoples_ranking[data[0]] += peoples_distance.index(data)
+    for data in peoples_duration:
+        peoples_ranking[data[0]] += peoples_duration.index(data)
+    peoples_ranking = sorted(peoples_ranking.items(), key=lambda x: x[1], reverse=False)
+    print(peoples_ranking)
+    return render(request, 'polls/detail.html', {"peoples_ranking": peoples_ranking, "peoples_duration" : peoples_duration, "peoples_distance" : peoples_distance, "peoples_cups" : peoples_cups, "group" : group, "group_id": group_id, "select" : select, "history" : history})
 
 
 def submit(request, group_id):

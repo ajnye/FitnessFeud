@@ -46,6 +46,15 @@
     </h3>
     {% endif %}
 
+
+    Current Rankings Overall:
+    {% for person in peoples_ranking %}
+        <li>{{ forloop.counter }}. {{ person.0 }} </li>
+    {% endfor %}
+
+    <br>
+    <br>
+
     Current Rankings in Exercise Duration (in minutes):
     {% for person in peoples_duration %}
         <li>{{ forloop.counter }}. {{ person.0 }}, {{ person.1 }} minutes</li>
