@@ -22,6 +22,11 @@ urlpatterns = [
     path('home', views.groups, name='home'),
     #Cheryl
     path('image_upload', views.image_view, name='image_upload'),
+
+    # home
+    path('home', views.groups, name='home'),
+    # group details
+    path('group/<int:group_id>/', views.group_detail, name='group_detail'),
 ]
 
 if settings.DEBUG:
