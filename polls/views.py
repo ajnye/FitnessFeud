@@ -79,35 +79,35 @@ def groups(request):
     }
     return render(request, 'polls/homepage.html', context)
 
-def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    latest_group_list = Group.objects.order_by('?')
-    context = {
-        'latest_question_list': latest_question_list, 'latest_group_list' : latest_group_list
-    }
-    return render(request, 'polls/index.html', context)
-
-def detail(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    # peoples = get_object_or_404(Group, pk=group_id).person_set.all().order_by('name')[:3]
-    return render(request, 'polls/detail.html', {"question" : question})
-
 def group_detail(request, group_id):
-    # question = get_object_or_404(Question, pk=question_id)
-    # peoples = get_object_or_404(Group, pk=group_id).person_set.order_by('name')[:3]
+
     group = get_object_or_404(Group, pk=group_id)
+
+    conn = sqlite3.connect('db.sqlite3')
+    cursor = conn.cursor()
+    sqlcommand = 'SELECT * FROM polls_person WHERE group_id = ' + str(group_id)
+    cursor.execute(sqlcommand)
+    reslist = cursor.fetchall()
+    peoples_cups = { }
+    peoples_duration = { }
+    peoples_distance = { }
+    for data in reslist:
+        if data[1] in peoples_cups.keys():
+            peoples_cups[data[1]] += data[5]
+            peoples_duration[data[1]] += data[3]
+            peoples_distance[data[1]] += data[4] 
+        else:
+            peoples_cups[data[1]] = data[5]
+            peoples_duration[data[1]] = data[3]
+            peoples_distance[data[1]] = data[4] 
+    
     group.update_days_left()
-    peoples_duration = group.person_set.order_by('-duration')[:3]
-    peoples_distance = group.person_set.order_by('-distance')[:3]
-    peoples_cups = group.person_set.order_by('-cups')[:3]
-    return render(request, 'polls/detail.html', {"peoples_duration" : peoples_duration, "peoples_distance" : peoples_distance, "peoples_cups" : peoples_cups, "group" : group })
+    peoples_duration = sorted(peoples_duration.items(), key=lambda x: x[1], reverse=True)
+    peoples_distance = sorted(peoples_distance.items(), key=lambda x: x[1], reverse=True)
+    peoples_cups = sorted(peoples_cups.items(), key=lambda x: x[1], reverse=True)
+    print(peoples_cups)
+    return render(request, 'polls/detail.html', {"peoples_duration" : peoples_duration, "peoples_distance" : peoples_distance, "peoples_cups" : peoples_cups, "group" : group, "group_id": group_id})
 
-def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
-
-def vote(request, question_id):
-    return HttpResponse("You're voting on question %s." % question_id)
 
 def submit(request, group_id):
     if request.method == 'POST':
@@ -119,16 +119,26 @@ def submit(request, group_id):
         context = { 'search_results': search_results, 'group' : group, 'group_id' : group_id }
 
         return render(request, 'polls/submit.html', context)
-        # # Create a form instance and populate it with data from the request (binding):
-        # form = submit(request.POST, question_id)
-
-        # # Check if the form is valid:
-        # if form.is_valid():
-        #     search_results = fname + " " + lname
-        #     question = get_object_or_404(Question, pk=question_id)
-        #     context = { 'search_results': search_results, 'question' : question, 'question_id' : question_id }
-
-        #     return render(request, 'polls/submit.html', context)
 
     group = get_object_or_404(Group, pk=group_id)
     return render(request, 'polls/submit.html', {'group': group})
+
+def image_gallery(request, group_id):
+    
+    conn = sqlite3.connect('db.sqlite3')
+    cursor = conn.cursor()
+    sqlcommand = 'SELECT image FROM polls_person WHERE group_id = ' + str(group_id) + ' AND image != \'0\'' 
+    cursor.execute(sqlcommand)
+    reslist = cursor.fetchall()
+    img_list = []
+    for x in reslist:
+        tmp = str(x)
+        img_list.append(tmp[1:len(tmp)-2])
+
+    group = get_object_or_404(Group, pk=group_id)
+    context = {
+        'group': group,
+        'group_id': group_id,
+        'image_list':img_list
+    }
+    return render(request, 'polls/image_gallery.html', context)

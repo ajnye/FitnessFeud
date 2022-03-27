@@ -21,7 +21,7 @@ class Choice(models.Model):
 
 class Group(models.Model):
     group_name = models.CharField(max_length=150)
-    days_left = models.IntegerField(default=1)
+    days_left = models.IntegerField(default=7)
     starting_date = models.DateTimeField('Date Started', default=timezone.now)
     ending_date = models.DateTimeField('Date Ended', default=timezone.now)
     def size(self) :
