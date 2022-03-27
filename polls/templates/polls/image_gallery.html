@@ -7,10 +7,15 @@
 
     </head>
     <body>
-        {% for image in image_list %}
-        <div> 
-            <img src="{{ image }}">
-        </div>
-        {% endfor %}
+        {% for i in select %}
+        {% if i.image != 0 %}
+            <h4>{{i.name}}, {{i.duration}} mins, {{i.distance}} miles, {{i.cups}} cups of water</h4>
+            <div class = "gallery">
+                <a target ="_blank" href = "/../../../media/{{i.image}}">
+                    <img src = "/../../../media/{{i.image}}" alt = "pizzatime" width="600" height = "400">
+                </a>
+            </div>
+        {% endif %}
+    {% endfor %}
     </body>
 </html>

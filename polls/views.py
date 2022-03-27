@@ -148,19 +148,21 @@ def submit(request, group_id):
 def image_gallery(request, group_id):
     
     conn = sqlite3.connect('db.sqlite3')
-    cursor = conn.cursor()
-    sqlcommand = 'SELECT image FROM polls_person WHERE group_id = ' + str(group_id) + ' AND image != \'0\'' 
-    cursor.execute(sqlcommand)
-    reslist = cursor.fetchall()
-    img_list = []
-    for x in reslist:
-        tmp = str(x)
-        img_list.append(tmp[1:len(tmp)-2])
-
     group = get_object_or_404(Group, pk=group_id)
+    cursor = conn.cursor()
+    sqlcommand1 = 'SELECT * FROM polls_person WHERE group_id = ' + str(group_id) + ' ORDER BY date_recorded DESC LIMIT 5'
+    cursor.execute(sqlcommand1)
+
+    fields = [field_name[0] for field_name in cursor.description]
+    select = [dict(zip(fields,row)) for row in cursor.fetchall()]
+
+    history = Person.objects.all()
+
     context = {
+
         'group': group,
         'group_id': group_id,
-        'image_list':img_list
+        "select" : select, 
+        "history" : history
     }
     return render(request, 'polls/image_gallery.html', context)
