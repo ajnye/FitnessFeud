@@ -12,9 +12,7 @@ urlpatterns = [
 
     # Dylan
     path('home', views.groups, name='home'),
-    #Cheryl
-    # path('image_upload', views.image_view, name='image_upload'),
-
+    
     # home
     path('home', views.groups, name='home'),
 

@@ -54,10 +54,12 @@
     <h2>{{ group.days_left }} Days Left!</h2>
 
     {% if group.days_left == 0 %}
-    <h3>Time is over. <br>
-    {{peoples_duration.0}} has ran the longest!
-    {{peoples_distance.0}} has ran the furthest!
-    {{peoples_cups.0}} has drank the most!
+    <h3>Times up! <br>
+    {{peoples_ranking.0.0}} performed the best overall!
+    {{peoples_duration.0.0}} has ran the longest!
+    <br>
+    {{peoples_distance.0.0}} has ran the furthest!
+    {{peoples_cups.0.0}} has drank the most!
     </h3>
     {% endif %}
 
