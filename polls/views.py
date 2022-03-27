@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Question
 from .models import Group
@@ -7,20 +7,34 @@ from .models import Group
 from django.http import HttpResponse, Http404
 from django.template import loader
 
-#Dylan
-def groups(request, question_id):
+import sqlite3
+
+def groups(request):
+    print(request.method)
     if request.method == 'POST':
-        name_input = request.POST.get('fname')
-        #create group in SQL
-        group = Group(group_name = name_input)
-        group.save()
+        if request.POST.get('fname') != None:
+            name_input = request.POST.get('fname')
+            #create group in SQL
+            group = Group(group_name = name_input)
+            group.save()
 
-        search_results = name_input
-        question = get_object_or_404(Question, pk=question_id)
-        context = { 'search_results': search_results, 'question' : question, 'question_id' : question_id }
-
-        return render(request, 'polls/submit.html', context)
-        
+            conn = sqlite3.connect('db.sqlite3')
+            cursor = conn.cursor()
+            sqlcommand = 'SELECT id FROM polls_group WHERE id = ' + str(group.id)
+            cursor.execute(sqlcommand)
+            reslist = cursor.fetchall()
+            result = str(reslist[0])
+        else:
+            group_id = request.POST.get('gname')
+            conn = sqlite3.connect('db.sqlite3')
+            cursor = conn.cursor()
+            sqlcommand = 'SELECT id FROM polls_group WHERE group_name = \'' + str(group_id) + '\'' 
+            print(sqlcommand)
+            cursor.execute(sqlcommand)
+            reslist = cursor.fetchall()
+            result = str(reslist[0])
+            print(result)
+        return redirect('group/' + result[1:len(result)-2])
 
     group_list = Group.objects.order_by('-group_name')
     context = {

@@ -5,7 +5,7 @@ from . import views
 app_name = 'polls'
 urlpatterns = [
     # ex: /polls/
-    path('', views.index, name='index'),
+    path('', views.groups, name='index'),
     # ex: /polls/5/
     path('<int:question_id>/', views.detail, name='detail'),
     # ex: /polls/5/results/
@@ -17,7 +17,8 @@ urlpatterns = [
 
     # path(r'^submit/$', views.submit),
 
-    # Dylan
+    # home
     path('home', views.groups, name='home'),
+    # group details
     path('group/<int:group_id>/', views.group_detail, name='group_detail'),
 ]
