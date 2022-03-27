@@ -100,7 +100,20 @@ def group_detail(request, group_id):
     peoples_duration = group.person_set.order_by('-duration')[:3]
     peoples_distance = group.person_set.order_by('-distance')[:3]
     peoples_cups = group.person_set.order_by('-cups')[:3]
-    return render(request, 'polls/detail.html', {"peoples_duration" : peoples_duration, "peoples_distance" : peoples_distance, "peoples_cups" : peoples_cups, "group" : group })
+
+    conn = sqlite3.connect('db.sqlite3')
+    cursor = conn.cursor()
+    sqlcommand1 = 'SELECT * FROM polls_person WHERE group_id = ' + str(group_id) + ' ORDER BY date_recorded DESC LIMIT 5'
+    cursor.execute(sqlcommand1)
+
+    fields = [field_name[0] for field_name in cursor.description]
+    select = [dict(zip(fields,row)) for row in cursor.fetchall()]
+
+    history = Person.objects.all()
+    # get specific field
+    # nome = (row['A1_NOME'] for row in select)
+    
+    return render(request, 'polls/detail.html', {"peoples_duration" : peoples_duration, "peoples_distance" : peoples_distance, "peoples_cups" : peoples_cups, "group" : group, "select" : select, "history" : history })
 
 def results(request, question_id):
     response = "You're looking at the results of question %s."

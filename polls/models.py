@@ -43,6 +43,7 @@ class Person(models.Model):
     distance = models.DecimalField(decimal_places=2, max_digits=50, default=0)
     cups = models.DecimalField(decimal_places=1, max_digits=50, default=0 )
     image = models.ImageField(upload_to='images/')
+    date_recorded = models.DateTimeField('Date Recorded', default=timezone.now)
     def __str__ (self):
         return self.name
         
