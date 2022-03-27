@@ -1,9 +1,12 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
 <html>
+    <nav>
+        <a href="/polls/home">Home</a>
+    </nav>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,6 +27,11 @@
             <label for="fname">Create Group:</label><br>
             <input type="text" id="fname" name="fname" value=""><br>
             <input type="submit" value="Submit">
+            {% if error == 1 %}
+                <p>{{ error_msg }}</p>
+            {% else %}
+                <p> </p>
+            {% endif%}
 
             {% if fname in group_list %}
                 Display search results here. {{search_results}}
@@ -35,6 +43,12 @@
             <label for="gname">Find Group:</label><br>
             <input type="text" id="gname" name="gname" value=""><br>
             <input type="submit" value="Submit">
+
+            {% if error == 2 %}
+                <p>{{ error_msg }}</p>
+            {% else %}
+                <p> </p>
+            {% endif%}
         </form>
         <script src="" async defer></script>
     </body>

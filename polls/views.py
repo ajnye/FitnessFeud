@@ -28,14 +28,27 @@ def groups(request):
     if request.method == 'POST':
         if request.POST.get('fname') != None:
             name_input = request.POST.get('fname')
+            #check if group already exists
+            conn = sqlite3.connect('db.sqlite3')
+            cursor = conn.cursor()
+            sqlcommand1 = 'SELECT group_name FROM polls_group WHERE group_name = \'' + str(name_input) + '\''
+            cursor.execute(sqlcommand1)
+            if len(cursor.fetchall()) != 0:
+                group_list = Group.objects.order_by('-group_name')
+                msg = 'Group Already Exists'
+                error = 1
+                context = {
+                    'group_list': group_list,
+                    'error_msg': msg,
+                    'error':error
+                }
+                return render(request, 'polls/homepage.html', context)
             #create group in SQL
             group = Group(group_name = name_input)
             group.save()
 
-            conn = sqlite3.connect('db.sqlite3')
-            cursor = conn.cursor()
-            sqlcommand = 'SELECT id FROM polls_group WHERE id = ' + str(group.id)
-            cursor.execute(sqlcommand)
+            sqlcommand2 = 'SELECT id FROM polls_group WHERE id = ' + str(group.id)
+            cursor.execute(sqlcommand2)
             reslist = cursor.fetchall()
             result = str(reslist[0])
         else:
@@ -45,12 +58,24 @@ def groups(request):
             sqlcommand = 'SELECT id FROM polls_group WHERE group_name = \'' + str(group_id) + '\'' 
             cursor.execute(sqlcommand)
             reslist = cursor.fetchall()
+            if len(reslist) == 0:
+                group_list = Group.objects.order_by('-group_name')
+                msg = 'Group Doesn\'t Exists'
+                error = 2
+                context = {
+                    'group_list': group_list,
+                    'error_msg': msg,
+                    'error':error
+                }
+                return render(request, 'polls/homepage.html', context)
             result = str(reslist[0])
         return redirect('group/' + result[1:len(result)-2])
 
     group_list = Group.objects.order_by('-group_name')
     context = {
-        'group_list': group_list
+        'group_list': group_list,
+        'error_msg':'',
+        'error':0
     }
     return render(request, 'polls/homepage.html', context)
 
