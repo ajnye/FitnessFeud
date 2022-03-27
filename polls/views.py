@@ -16,7 +16,7 @@ def image_view(request):
 
         if form.is_valid():
             form.save()
-            return redirect(form.fields['group'].group_id)
+            return redirect('/polls/group/' + str(form.cleaned_data.get('group').id))
     else:
         form = PersonForm()
         
@@ -96,6 +96,7 @@ def group_detail(request, group_id):
     # question = get_object_or_404(Question, pk=question_id)
     # peoples = get_object_or_404(Group, pk=group_id).person_set.order_by('name')[:3]
     group = get_object_or_404(Group, pk=group_id)
+    group.update_days_left()
     peoples_duration = group.person_set.order_by('-duration')[:3]
     peoples_distance = group.person_set.order_by('-distance')[:3]
     peoples_cups = group.person_set.order_by('-cups')[:3]

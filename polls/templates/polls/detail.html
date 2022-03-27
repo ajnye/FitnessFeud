@@ -1,4 +1,3 @@
-
 <html>
     <nav>
         <a href="/polls/home">Home</a>
@@ -7,39 +6,43 @@
     <h2></h2>
     <ul>
     <h1>{{ group.group_name }}</h1>
-    <h2>{{ group.days_left }} days left!</h2>
-    
+    <h2>{{ group.days_left }} Days Left!</h2>
+
     {% if group.days_left == 0 %}
-    <h3>Time is over. {{peoples.0}} has won!</h3>
+    <h3>Time is over. <br>
+    {{peoples_duration.0}} has ran the longest!
+    {{peoples_distance.0}} has ran the furthest!
+    {{peoples_cups.0}} has drank the most!
+    </h3>
     {% endif %}
-    
+
     Current Rankings in Exercise Duration (in minutes):
     {% for person in peoples_duration %}
         <li>{{ forloop.counter }}. {{ person }}, {{ person.duration }} minutes</li>
     {% endfor %}
-    
+
     <br>
     <br>
-    
+
     Current Rankings in Exercise Distance (in miles):
     {% for person in peoples_distance %}
         <li>{{ forloop.counter }}. {{ person }}, {{ person.distance }} miles</li>
     {% endfor %}
-    
+
     <br>
     <br>
-    
+
     Current Rankings in Water Drunk (in cups):
     {% for person in peoples_cups %}
         <li>{{ forloop.counter }}. {{ person }}, {{ person.cups }} cups</li>
     {% endfor %}
-    
+
     {% if group.is_ongoing %}
         <form action="submission", method="post">
             {% csrf_token %}
             <input type="submit" value="Submit A New Entry">
         </form>
     {% endif %}
-    
+
     </ul>
 </html>
