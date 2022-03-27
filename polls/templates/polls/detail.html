@@ -2,10 +2,14 @@
 <h2></h2>
 <ul>
 <h1>{{ group.group_name }}</h1>
-<h2>{{ group.days_left }} days left!</h2>
+<h2>{{ group.days_left }} Days Left!</h2>
 
 {% if group.days_left == 0 %}
-<h3>Time is over. {{peoples.0}} has won!</h3>
+<h3>Time is over. <br>
+{{peoples_duration.0}} has ran the longest!
+{{peoples_distance.0}} has ran the furthest!
+{{peoples_cups.0}} has drank the most!
+</h3>
 {% endif %}
 
 Current Rankings in Exercise Duration (in minutes):

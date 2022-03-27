@@ -21,7 +21,7 @@ class Choice(models.Model):
 
 class Group(models.Model):
     group_name = models.CharField(max_length=150)
-    days_left = models.IntegerField(default=0)
+    days_left = models.IntegerField(default=1)
     starting_date = models.DateTimeField('Date Started', default=timezone.now)
     ending_date = models.DateTimeField('Date Ended', default=timezone.now)
     def size(self) :
@@ -33,7 +33,7 @@ class Group(models.Model):
     def update_days_left(self):
         print(self.ending_date)
         print(timezone.now())
-        self.days_left = (self.ending_date - timezone.now()).days
+        self.days_left = 1 + (self.ending_date - timezone.now()).days 
         return self.days_left
 
 class Person(models.Model):
@@ -41,11 +41,11 @@ class Person(models.Model):
     name = models.CharField(max_length=50)
     duration = models.IntegerField(default=0)
     distance = models.DecimalField(decimal_places=2, max_digits=50, default=0)
-    cups = models.DecimalField(decimal_places=1, max_digits=50, default=0)
+    cups = models.DecimalField(decimal_places=1, max_digits=50, default=0 )
     image = models.ImageField(upload_to='images/')
     def __str__ (self):
         return self.name
-       
+        
 class Exercise(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     type = models.CharField(max_length=50)
