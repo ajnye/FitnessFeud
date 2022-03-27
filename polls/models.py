@@ -30,6 +30,8 @@ class Group(models.Model):
 class Person(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
+    duration = models.IntegerField(default=0)
+    distance = models.DecimalField(decimal_places=2, max_digits=50, default=0)
     def __str__ (self):
         return self.name
         

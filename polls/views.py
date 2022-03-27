@@ -44,9 +44,9 @@ def detail(request, question_id):
 def group_detail(request, group_id):
     # question = get_object_or_404(Question, pk=question_id)
     # peoples = get_object_or_404(Group, pk=group_id).person_set.order_by('name')[:3]
-    peoples = get_object_or_404(Group, pk=group_id)
+    peoples = get_object_or_404(Group, pk=group_id).person_set.order_by('-duration')[:3]
     print(peoples)
-    return render(request, 'polls/detail.html', {"peoples" : peoples})
+    return render(request, 'polls/detail.html', {"peoples" : peoples, "group" : get_object_or_404(Group, pk=group_id)})
 
 def results(request, question_id):
     response = "You're looking at the results of question %s."

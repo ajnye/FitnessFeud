@@ -1,12 +1,23 @@
 <h1>{{ groups.name }}</h1>
 <h2></h2>
-<ol>
-{{ peoples.group_name }}
-Current Rankings:
-{% for person in peoples.person_set.all %}
-    {% for exercise in person.exercise_set.all %}
-        <li>{{ forloop.counter }}. {{ exercise_type }}</li>
-    {% endfor %}
+<ul>
+<h1>{{ group.group_name }}</h1>
+<h2>{{ group.days_left }} days left!</h2>
+
+{% if group.days_left == 0 %}
+<h3>Time is over. {{peoples.0}} has won!</h3>
+{% endif %}
+
+Current Rankings in Exercise Duration:
+{% for person in peoples %}
+    <li>{{ forloop.counter }}. {{ person }}, {{ person.duration }} hours</li>
 {% endfor %}
 
-</ol>
+{% if group.days_left == 0 %}
+    <form action="", method="post">
+        {% csrf_token %}
+        <input type="submit" value="Submit A New Entry">
+    </form> 
+{% endif %}
+
+</ul>
