@@ -22,7 +22,7 @@ urlpatterns = [
     path('group/<int:group_id>/', views.group_detail, name='group_detail'),
 
     #Cheryl
-    path('image_upload', views.image_view, name='image_upload'),
+    path('submission', views.image_view, name='image_upload'),
 ]
 
 if settings.DEBUG:
